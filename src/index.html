@@ -1,0 +1,50 @@
+<head>
+  <style>
+    #my_camera {
+      width: 320px;
+      height: 240px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div id="my_camera"></div>
+  <input type="button" value="Ligar" onClick="configure()" />
+  <input type="text" id="nomeId" />
+  <input type="button" value="Cadastrar" onClick="take_snapshot()" />
+  <input type="button" value="Reconhecer" onClick="reconheceImg()" />
+
+  <div id="results"></div>
+
+  <!-- Script -->
+  <script type="text/javascript" src="./webcam.min.js"></script>
+  <script type="text/javascript" src="./face-detection.js"></script>
+
+  <!-- Code to handle taking the snapshot and displaying it locally -->
+  <script language="JavaScript">
+    // Configure a few settings and attach camera
+    function configure() {
+      Webcam.set({
+        width: 320,
+        height: 240,
+        image_format: "jpeg",
+        jpeg_quality: 90
+      });
+      Webcam.attach("#my_camera");
+    }
+
+    function take_snapshot() {
+      // take snapshot and get image data
+      Webcam.snap(function(data_uri) {
+        // display results in page
+        document.getElementById("results").innerHTML =
+          '<img id="imageprev" src="' + data_uri + '"/>';
+        //const imageUrl = data_uri;
+
+        enviarImg(data_uri);
+      });
+
+      Webcam.reset();
+    }
+  </script>
+</body>
